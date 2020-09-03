@@ -4,6 +4,8 @@ const exphbs  = require('express-handlebars');
 const path = require('path');
 const route = require('./routes');
 
+const db = require('./config/db/index');
+
 const app = express();
 const port = 3000;
 
@@ -13,6 +15,9 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use(express.json());
+
+//Connect to db
+db.connect();
 
 //HTTP logger
 // app.use(morgan('combined'));
