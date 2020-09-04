@@ -1,12 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const URLSlugs = require('mongoose-url-slugs');
+var mongooseDelete = require('mongoose-delete');
 
-const Course = new Schema({
-  author: ObjectId,
-  // title:{ type: String, default: 'title' },
-  // desc: { type: String, default: 'desc' },
+const book = new Schema({
+  avatar: { type: String },
+  name: { type: String },
+  author: String,
+  priceRegular: String,
+  saleOff: String,
+  finalPrice: String,
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model('Course', Course);
+//Add plugin
+book.plugin(URLSlugs('name'));
+book.plugin(mongooseDelete, { 
+  deletedAt : true,
+  overrideMethods: 'all',
+});
+
+module.exports = mongoose.model('book', book);
 
